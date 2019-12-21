@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>深拷贝 | Ryan Lin 的小书房</title>
+    <meta name="description" content="Just playing around">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.17f32d1e.css" as="style"><link rel="preload" href="/assets/js/app.7b557cf4.js" as="script"><link rel="preload" href="/assets/js/2.9d2502b9.js" as="script"><link rel="preload" href="/assets/js/11.533a137f.js" as="script"><link rel="prefetch" href="/assets/js/10.abca38ac.js"><link rel="prefetch" href="/assets/js/12.09bfe638.js"><link rel="prefetch" href="/assets/js/13.6809eae0.js"><link rel="prefetch" href="/assets/js/14.5b42a10c.js"><link rel="prefetch" href="/assets/js/15.581d44ad.js"><link rel="prefetch" href="/assets/js/16.015d76f3.js"><link rel="prefetch" href="/assets/js/17.05f4e776.js"><link rel="prefetch" href="/assets/js/18.be846678.js"><link rel="prefetch" href="/assets/js/19.96606190.js"><link rel="prefetch" href="/assets/js/20.bb2d1d13.js"><link rel="prefetch" href="/assets/js/21.25bb610e.js"><link rel="prefetch" href="/assets/js/22.470a03d7.js"><link rel="prefetch" href="/assets/js/23.ac5167e8.js"><link rel="prefetch" href="/assets/js/24.0ee61759.js"><link rel="prefetch" href="/assets/js/25.b5c31bf2.js"><link rel="prefetch" href="/assets/js/26.54c07ad2.js"><link rel="prefetch" href="/assets/js/27.0c2ac7b0.js"><link rel="prefetch" href="/assets/js/3.4de31ec5.js"><link rel="prefetch" href="/assets/js/4.3ff2fe10.js"><link rel="prefetch" href="/assets/js/5.c1f49f56.js"><link rel="prefetch" href="/assets/js/6.8c45e792.js"><link rel="prefetch" href="/assets/js/7.689677a5.js"><link rel="prefetch" href="/assets/js/8.598e5b67.js"><link rel="prefetch" href="/assets/js/9.9fd3d84b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.17f32d1e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Ryan Lin 的小书房</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="深拷贝"><a href="#深拷贝" class="header-anchor">#</a> 深拷贝</h2> <p>可以通过 JSON.parse(JSON.stringify(object)) 来解决。</p> <div class="language- extra-class"><pre class="language-text"><code>  let a = {
+    age: 1,
+    jobs: {
+      first: 'FE'
+    }
+  }
+  let b = JSON.parse(JSON.stringify(a))
+  a.jobs.first = 'native'
+  console.log(b.jobs.first) // FE
+</code></pre></div><p>但是该方法也是有局限性的：</p> <ul><li>会忽略 undefined</li> <li>会忽略 symbol</li> <li>不能序列化函数</li> <li>不能解决循环引用的对象</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.7b557cf4.js" defer></script><script src="/assets/js/2.9d2502b9.js" defer></script><script src="/assets/js/11.533a137f.js" defer></script>
+  </body>
+</html>

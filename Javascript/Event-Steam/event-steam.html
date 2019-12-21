@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>事件 | Ryan Lin 的小书房</title>
+    <meta name="description" content="Just playing around">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.17f32d1e.css" as="style"><link rel="preload" href="/assets/js/app.7b557cf4.js" as="script"><link rel="preload" href="/assets/js/2.9d2502b9.js" as="script"><link rel="preload" href="/assets/js/10.abca38ac.js" as="script"><link rel="prefetch" href="/assets/js/11.533a137f.js"><link rel="prefetch" href="/assets/js/12.09bfe638.js"><link rel="prefetch" href="/assets/js/13.6809eae0.js"><link rel="prefetch" href="/assets/js/14.5b42a10c.js"><link rel="prefetch" href="/assets/js/15.581d44ad.js"><link rel="prefetch" href="/assets/js/16.015d76f3.js"><link rel="prefetch" href="/assets/js/17.05f4e776.js"><link rel="prefetch" href="/assets/js/18.be846678.js"><link rel="prefetch" href="/assets/js/19.96606190.js"><link rel="prefetch" href="/assets/js/20.bb2d1d13.js"><link rel="prefetch" href="/assets/js/21.25bb610e.js"><link rel="prefetch" href="/assets/js/22.470a03d7.js"><link rel="prefetch" href="/assets/js/23.ac5167e8.js"><link rel="prefetch" href="/assets/js/24.0ee61759.js"><link rel="prefetch" href="/assets/js/25.b5c31bf2.js"><link rel="prefetch" href="/assets/js/26.54c07ad2.js"><link rel="prefetch" href="/assets/js/27.0c2ac7b0.js"><link rel="prefetch" href="/assets/js/3.4de31ec5.js"><link rel="prefetch" href="/assets/js/4.3ff2fe10.js"><link rel="prefetch" href="/assets/js/5.c1f49f56.js"><link rel="prefetch" href="/assets/js/6.8c45e792.js"><link rel="prefetch" href="/assets/js/7.689677a5.js"><link rel="prefetch" href="/assets/js/8.598e5b67.js"><link rel="prefetch" href="/assets/js/9.9fd3d84b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.17f32d1e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Ryan Lin 的小书房</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="事件"><a href="#事件" class="header-anchor">#</a> 事件</h1> <h2 id="事件触发的三阶段："><a href="#事件触发的三阶段：" class="header-anchor">#</a> 事件触发的三阶段：</h2> <p>事件触发有三个阶段：</p> <ul><li>window 往事件注册处传播，遇到注册的捕获事件会触发</li> <li>传播到事件注册处时触发注册的事件</li> <li>从事件注册处往 window 传播，遇到注册的冒泡事件会触发</li></ul> <p>事件传播过程</p> <p>事件触发一般来说会按照上面的顺序进行，</p> <p><img src="/assets/images/event-steam.jpg" alt=""></p> <p>但是也有特例</p> <p>** 如果给一个 body 中的子节点同时注册冒泡和捕获事件，事件触发会按照注册的顺序执行。**</p> <div class="language- extra-class"><pre class="language-text"><code>  // 以下会先打印冒泡然后是捕获
+  node.addEventListener(
+    'click',
+    event =&gt; {
+      console.log('冒泡')
+    },
+    false
+  )
+  node.addEventListener(
+    'click',
+    event =&gt; {
+      console.log('捕获 ')
+    },
+    true
+  )
+</code></pre></div><h2 id="注册事件"><a href="#注册事件" class="header-anchor">#</a> 注册事件</h2> <p>在 <code>DOM1</code> 中通过 <code>node['on' + type]</code> 绑定事件， type 为事件类型</p> <div class="language- extra-class"><pre class="language-text"><code>  node.onclick = function () {}
+</code></pre></div><p>在 <code>DOM3</code> 中通过 <code>node.addEventListener('type', callback, capture)</code></p> <p>通常我们使用 <code>addEventListener</code> 注册事件，该函数的第三个参数可以是布尔值，也可以是对象。对于布尔值 <code>useCapture</code> 参数来说，该参数默认值为 <code>false</code> ，<code>useCapture</code> 决定了注册的事件是捕获事件还是冒泡事件。对于对象参数来说，可以使用以下几个属性</p> <ul><li>capture：布尔值，和 useCapture 作用一样</li> <li>once：布尔值，值为 true 表示该回调只会调用一次，调用后会移除监听</li> <li>passive：布尔值，表示永远不会调用 preventDefault</li></ul> <h2 id="阻止事件冒泡"><a href="#阻止事件冒泡" class="header-anchor">#</a> 阻止事件冒泡</h2> <p>一般来说，如果我们只希望事件只触发在目标上，这时候可以使用 <code>stopPropagation</code> 来阻止事件的进一步传播。通常我们认为 <code>stopPropagation</code> 是用来阻止事件冒泡的，其实该函数也可以阻止捕获事件。<code>stopImmediatePropagation</code> 同样也能实现阻止事件，但是还能阻止该事件目标执行别的注册事件。</p> <div class="language- extra-class"><pre class="language-text"><code>  node.addEventListener(
+    'click',
+    event =&gt; {
+      event.stopImmediatePropagation()
+      console.log('冒泡')
+    },
+    false
+  )
+  // 点击 node 只会执行上面的函数，该函数不会执行
+  node.addEventListener(
+    'click',
+    event =&gt; {
+      console.log('捕获 ')
+    },
+    true
+  )
+</code></pre></div><h2 id="事件代理"><a href="#事件代理" class="header-anchor">#</a> 事件代理</h2> <p>如果一个节点中的子节点是动态生成的，那么子节点需要 <code>注册事件的话应该注册在父节点上</code></p> <div class="language- extra-class"><pre class="language-text"><code>  &lt;ul id=&quot;ul&quot;&gt;
+    &lt;li&gt;1&lt;/li&gt;
+      &lt;li&gt;2&lt;/li&gt;
+    &lt;li&gt;3&lt;/li&gt;
+    &lt;li&gt;4&lt;/li&gt;
+    &lt;li&gt;5&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;script&gt;
+    let ul = document.querySelector('#ul')
+    ul.addEventListener('click', (event) =&gt; {
+      console.log(event.target);
+    })
+  &lt;/script&gt;
+</code></pre></div><p>事件代理的方式相较于直接给目标注册事件来说，有以下优点：</p> <ul><li>节省内存</li> <li>不需要给子节点注销事件</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.7b557cf4.js" defer></script><script src="/assets/js/2.9d2502b9.js" defer></script><script src="/assets/js/10.abca38ac.js" defer></script>
+  </body>
+</html>

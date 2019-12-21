@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>存储 | Ryan Lin 的小书房</title>
+    <meta name="description" content="Just playing around">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.17f32d1e.css" as="style"><link rel="preload" href="/assets/js/app.7b557cf4.js" as="script"><link rel="preload" href="/assets/js/2.9d2502b9.js" as="script"><link rel="preload" href="/assets/js/12.09bfe638.js" as="script"><link rel="prefetch" href="/assets/js/10.abca38ac.js"><link rel="prefetch" href="/assets/js/11.533a137f.js"><link rel="prefetch" href="/assets/js/13.6809eae0.js"><link rel="prefetch" href="/assets/js/14.5b42a10c.js"><link rel="prefetch" href="/assets/js/15.581d44ad.js"><link rel="prefetch" href="/assets/js/16.015d76f3.js"><link rel="prefetch" href="/assets/js/17.05f4e776.js"><link rel="prefetch" href="/assets/js/18.be846678.js"><link rel="prefetch" href="/assets/js/19.96606190.js"><link rel="prefetch" href="/assets/js/20.bb2d1d13.js"><link rel="prefetch" href="/assets/js/21.25bb610e.js"><link rel="prefetch" href="/assets/js/22.470a03d7.js"><link rel="prefetch" href="/assets/js/23.ac5167e8.js"><link rel="prefetch" href="/assets/js/24.0ee61759.js"><link rel="prefetch" href="/assets/js/25.b5c31bf2.js"><link rel="prefetch" href="/assets/js/26.54c07ad2.js"><link rel="prefetch" href="/assets/js/27.0c2ac7b0.js"><link rel="prefetch" href="/assets/js/3.4de31ec5.js"><link rel="prefetch" href="/assets/js/4.3ff2fe10.js"><link rel="prefetch" href="/assets/js/5.c1f49f56.js"><link rel="prefetch" href="/assets/js/6.8c45e792.js"><link rel="prefetch" href="/assets/js/7.689677a5.js"><link rel="prefetch" href="/assets/js/8.598e5b67.js"><link rel="prefetch" href="/assets/js/9.9fd3d84b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.17f32d1e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Ryan Lin 的小书房</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="存储"><a href="#存储" class="header-anchor">#</a> 存储</h1> <h2 id="cookie，localstorage，sessionstorage，indexdb"><a href="#cookie，localstorage，sessionstorage，indexdb" class="header-anchor">#</a> cookie，localStorage，sessionStorage，indexDB</h2> <p>我们先来通过表格学习下这几种存储方式的区别</p> <table><thead><tr><th>特性</th> <th>cookie</th> <th>localStorage</th> <th>sessionStorage</th> <th>indexDB</th></tr></thead> <tbody><tr><td>数据生命周期</td> <td>一般由服务器生成，可以设置过期时间</td> <td>除非被清理，否则一直存在</td> <td>页面关闭就清理</td> <td>除非被清理，否则一直存在</td></tr> <tr><td>数据存储大小</td> <td>4K</td> <td>5M</td> <td>5M</td> <td>无限</td></tr> <tr><td>与服务端通信</td> <td>每次都会携带在 header 中，对于请求性能影响</td> <td>不参与</td> <td>不参与</td> <td>不参与</td></tr></tbody></table> <p>从上表可以看到，cookie 已经不建议用于存储。如果没有大量数据存储需求的话，可以使用 localStorage 和 sessionStorage 。
+对于不怎么改变的数据尽量使用 localStorage 存储，否则可以用 sessionStorage 存储。</p> <p>对于 cookie 来说，我们还需要注意安全性。</p> <p>| 属性 | 作用 |
+| value | 如果用于保存用户登录态，应该将该值加密，不能使用明文的用户标识 |
+| http-only | 不能通过 JS 访问 Cookie，减少 XSS 攻击 |
+| secure | 只能在协议为 HTTPS 的请求中携带 |
+| same-site | 规定浏览器不能在跨域请求中携带 Cookie，减少 CSRF 攻击 |</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.7b557cf4.js" defer></script><script src="/assets/js/2.9d2502b9.js" defer></script><script src="/assets/js/12.09bfe638.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ES5 | Ryan Lin 的小书房</title>
+    <meta name="description" content="Just playing around">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.17f32d1e.css" as="style"><link rel="preload" href="/assets/js/app.7b557cf4.js" as="script"><link rel="preload" href="/assets/js/2.9d2502b9.js" as="script"><link rel="preload" href="/assets/js/8.598e5b67.js" as="script"><link rel="prefetch" href="/assets/js/10.abca38ac.js"><link rel="prefetch" href="/assets/js/11.533a137f.js"><link rel="prefetch" href="/assets/js/12.09bfe638.js"><link rel="prefetch" href="/assets/js/13.6809eae0.js"><link rel="prefetch" href="/assets/js/14.5b42a10c.js"><link rel="prefetch" href="/assets/js/15.581d44ad.js"><link rel="prefetch" href="/assets/js/16.015d76f3.js"><link rel="prefetch" href="/assets/js/17.05f4e776.js"><link rel="prefetch" href="/assets/js/18.be846678.js"><link rel="prefetch" href="/assets/js/19.96606190.js"><link rel="prefetch" href="/assets/js/20.bb2d1d13.js"><link rel="prefetch" href="/assets/js/21.25bb610e.js"><link rel="prefetch" href="/assets/js/22.470a03d7.js"><link rel="prefetch" href="/assets/js/23.ac5167e8.js"><link rel="prefetch" href="/assets/js/24.0ee61759.js"><link rel="prefetch" href="/assets/js/25.b5c31bf2.js"><link rel="prefetch" href="/assets/js/26.54c07ad2.js"><link rel="prefetch" href="/assets/js/27.0c2ac7b0.js"><link rel="prefetch" href="/assets/js/3.4de31ec5.js"><link rel="prefetch" href="/assets/js/4.3ff2fe10.js"><link rel="prefetch" href="/assets/js/5.c1f49f56.js"><link rel="prefetch" href="/assets/js/6.8c45e792.js"><link rel="prefetch" href="/assets/js/7.689677a5.js"><link rel="prefetch" href="/assets/js/9.9fd3d84b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.17f32d1e.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Ryan Lin 的小书房</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="es5"><a href="#es5" class="header-anchor">#</a> ES5</h1> <h2 id="手写-call、apply-及-bind-函数"><a href="#手写-call、apply-及-bind-函数" class="header-anchor">#</a> 手写 call、apply 及 bind 函数</h2> <p>首先从以下几点来考虑如何实现这几个函数</p> <ul><li>不传入第一个参数，那么上下文默认为 <code>window</code></li> <li>改变了 <code>this</code> 指向，让新的对象可以执行该函数，并能接受参数</li></ul> <p>那么我们先来实现 call</p> <div class="language- extra-class"><pre class="language-text"><code>  Function.prototype.myCall = function(context, ...args) {
+    if (typeof context !== &quot;function&quot;) {
+      throw new typeError(&quot;Error&quot;);
+    }
+
+    context = context || window;
+    context.fn = this;
+
+    const result = context.fn(...args);
+    delete context.fn;
+    return result;
+  };
+</code></pre></div><p>以下是对实现的分析：</p> <p>首先 <code>context</code> 为可选参数，如果不传的话默认上下文为 window
+接下来给 <code>context</code> 创建一个 fn 属性，并将值设置为需要调用的函数
+因为 <code>call</code> 可以传入多个参数作为调用函数的参数，所以需要将参数剥离出来
+然后调用函数并将对象上的函数删除</p> <p>实现 apply</p> <div class="language- extra-class"><pre class="language-text"><code>  Function.prototype.myApply = function(context, args) {
+    if (typeof context !== &quot;function&quot;) {
+      throw new typeError(&quot;Error&quot;);
+    }
+
+    context = context || window;
+    context.fn = this;
+    let result;
+
+    if (args) {
+      result = context.fn(...args);
+    } else {
+      result = context.fn();
+    }
+    delete context.fn;
+    return result;
+  };
+</code></pre></div><p>bind 的实现对比其他两个函数略微地复杂了一点，因为 bind 需要返回一个函数，
+需要判断一些边界问题，以下是 bind 的实现</p> <div class="language- extra-class"><pre class="language-text"><code>  Function.prototype.myBind = function(context, ...args) {
+    if (typeof this !== &quot;function&quot;) {
+      throw new TypeError(&quot;Error&quot;);
+    }
+    const _that = this;
+    return function F() {
+      if (this instanceof F) {
+        return new _that(...args, ...arguments);
+      }
+
+      return _that.apply(context, args.concat(...arguments));
+    };
+  };
+</code></pre></div><p>以下是对实现的分析：</p> <ul><li>前几步和之前的实现差不多，就不赘述了</li> <li>bind 返回了一个函数，对于函数来说有两种方式调用，一种是直接调用，一种是通过 new 的方式，我们先来说直接调用的方式</li> <li>对于直接调用来说，这里选择了 apply 的方式实现，但是对于参数需要注意以下情况：因为 bind 可以实现类似这样的代码 f.bind(obj, 1)(2)，所以我们需要将两边的参数拼接起来，于是就有了这样的实现 args.concat(...arguments)</li> <li>最后来说通过 new 的方式，在之前的章节中我们学习过如何判断 this，对于 new 的情况来说，不会被任何方式改变 this，所以对于这种情况我们需要忽略传入的 this</li></ul> <div class="language- extra-class"><pre class="language-text"><code>  function myInstance(left, right) {
+    const prototype = right.prototype;
+    left = left.__proto__;
+
+    while (true) {
+      if (left === null || left === undefined) {
+        return false;
+      }
+      if (prototype === left) {
+        return true;
+      }
+      left = left.__proto__;
+    }
+  }
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.7b557cf4.js" defer></script><script src="/assets/js/2.9d2502b9.js" defer></script><script src="/assets/js/8.598e5b67.js" defer></script>
+  </body>
+</html>
